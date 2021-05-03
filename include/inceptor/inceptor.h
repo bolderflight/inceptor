@@ -26,26 +26,31 @@
 #ifndef INCLUDE_INCEPTOR_INCEPTOR_H_
 #define INCLUDE_INCEPTOR_INCEPTOR_H_
 
-#include <vector>
 #include "core/core.h"
+#include "global_defs/global_defs.h"
 
 namespace bfs {
 
-struct InceptorConfig {
-  struct Inceptor {
-    int8_t ch;
-    std::vector<float> poly_coeff;
-  };
-  int32_t sampling_period_ms;
-  Inceptor throttle_en;
-  Inceptor mode0;
-  Inceptor mode1;
-  Inceptor mode2;
-  Inceptor throttle;
-  Inceptor pitch;
-  Inceptor roll;
-  Inceptor yaw;
+/* Config for a single inceptor */
+struct InceptorChannel {
+  int8_t ch;
+  int8_t num_coef;
+  float poly_coeff[MAX_POLY_COEF_SIZE];
 };
+/* Inceptor config */
+struct InceptorConfig {
+  HardwareSerial *hw;
+  int32_t sampling_period_ms;
+  InceptorChannel throttle_en;
+  InceptorChannel mode0;
+  InceptorChannel mode1;
+  InceptorChannel mode2;
+  InceptorChannel throttle;
+  InceptorChannel pitch;
+  InceptorChannel roll;
+  InceptorChannel yaw;
+};
+/* Inceptor data */
 struct InceptorData {
   bool new_data;
   bool healthy;
@@ -58,16 +63,14 @@ struct InceptorData {
   float roll;
   float yaw;
 };
-template<class Impl>
-class Inceptor {
- public:
-  explicit Inceptor(HardwareSerial *bus) : impl_(bus) {}
-  bool Init(const ImuConfig &ref) {return impl_.Init(ref);}
-  bool Read(ImuData * const ptr) {return impl_.Read(ptr);}
-
- private:
-  Impl impl_;
-};
+/* Concept defining an inceptor interface */
+template<typename T>
+concept Inceptor = requires(T inceptor,
+                            const InceptorConfig &cfg,
+                            InceptorData * const data) {
+  { inceptor.Init(cfg) } -> std::same_as<bool>;
+  { inceptor.Read(data) } -> std::same_as<bool>;
+};  // NOLINT - gets confused with concepts and semicolon after braces
 
 }  // namespace bfs
 
