@@ -41,22 +41,24 @@ This library is within the namespace *bfs*.
 
 | Name | Description |
 | --- | --- |
+| HardwareSerial *hw | A pointer to the serial port for SBUS |
 | int32_t sampling_period_ms | The sampling period, ms |
-| Inceptor throttle_en | Throttle enable configuration |
-| Inceptor mode0 | Mode0 configuration |
-| Inceptor mode1 | Mode1 configuration |
-| Inceptor mode2 | Mode2 configuration |
-| Inceptor throttle | Throttle configuration |
-| Inceptor pitch | Pitch configuration |
-| Inceptor roll | Roll configuration |
-| Inceptor yaw | Yaw configuration |
+| InceptorChannel throttle_en | Throttle enable configuration |
+| InceptorChannel mode0 | Mode0 configuration |
+| InceptorChannel mode1 | Mode1 configuration |
+| InceptorChannel mode2 | Mode2 configuration |
+| InceptorChannel throttle | Throttle configuration |
+| InceptorChannel pitch | Pitch configuration |
+| InceptorChannel roll | Roll configuration |
+| InceptorChannel yaw | Yaw configuration |
 
-The sampling period is how often the inceptor should provide new data. The configuration for each inceptor is a struct consisting of:
+The sampling period is how often the inceptor should provide new data, used for health monitoring. The configuration for each inceptor is a struct consisting of:
 
 | Name | Description |
 | --- | --- |
 | int8_t ch | The channel number |
-| std::vector<float> poly_coeff | Polyval coefficients to convert the raw input to a scaled input |
+| int8_t num_coef | The number of polynomial coefficients |
+| float poly_coeff[MAX_POLY_COEF_SIZE] | Polyval coefficients to convert the raw input to a scaled input |
 
 
 **struct InceptorData** defines a structure of data returned from the sensor. The data fields are:
@@ -74,19 +76,8 @@ The sampling period is how often the inceptor should provide new data. The confi
 | float roll | Roll input |
 | float yaw | Yaw input |
 
-**Inceptor** The *Inceptor* class defines a common interface to inceptors. It is templated with the object implementing this interface for the desired sensor. For example, the uBlox implementation may be:
+**Inceptors** Concepts are used to defined what an *Inceptor* compliant object looks like and provide a means to templating against an *Inceptor* interface. The required methods are:
 
-```C++
-bfs::Inceptor<bfs::SbusRx> inceptor(&Serial1);
-```
+**bool Init(const InceptorConfig &ref)** Initializes communication with the sensor and configures it. Returns true if communication is established and configuration was successful.
 
-Similar to how a pure virtual class can be used to define an interface using dynamic polymorphism, this approach uses static polymorphism.
-
-**Inceptor(HardwareSerial &ast;bus)** creates an Inceptor object; a pointer to the Serial bus object is passed.
-
-**bool Init(const InceptorConfig &ref)** initializes communication with the sensor and configures it. Returns true if communication is established and configuration was successful.
-
-**bool Read(InceptorData &ast; const ptr)** reads data from the sensor. Returns true if new data was received.
-
-
-
+**bool Read(InceptorData &ast; const ptr)** Reads data from the sensor. Returns true if new data was received.
