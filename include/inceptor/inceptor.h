@@ -40,11 +40,11 @@ struct InceptorChannel {
 /* Inceptor config */
 struct InceptorConfig {
   HardwareSerial *hw;
-  int32_t sampling_period_ms;
   InceptorChannel throttle_en;
   InceptorChannel mode0;
   InceptorChannel mode1;
   InceptorChannel mode2;
+  InceptorChannel mode3;
   InceptorChannel throttle;
   InceptorChannel pitch;
   InceptorChannel roll;
@@ -53,11 +53,13 @@ struct InceptorConfig {
 /* Inceptor data */
 struct InceptorData {
   bool new_data;
-  bool healthy;
+  bool lost_frame;
+  bool failsafe;
   bool throttle_en;
   int8_t mode0;
   int8_t mode1;
   int8_t mode2;
+  int8_t mode3;
   float throttle;
   float pitch;
   float roll;

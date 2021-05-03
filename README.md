@@ -47,12 +47,13 @@ This library is within the namespace *bfs*.
 | InceptorChannel mode0 | Mode0 configuration |
 | InceptorChannel mode1 | Mode1 configuration |
 | InceptorChannel mode2 | Mode2 configuration |
+| InceptorChannel mode3 | Mode3 configuration |
 | InceptorChannel throttle | Throttle configuration |
 | InceptorChannel pitch | Pitch configuration |
 | InceptorChannel roll | Roll configuration |
 | InceptorChannel yaw | Yaw configuration |
 
-The sampling period is how often the inceptor should provide new data, used for health monitoring. The configuration for each inceptor is a struct consisting of:
+The configuration for each inceptor is a struct consisting of:
 
 | Name | Description |
 | --- | --- |
@@ -66,11 +67,13 @@ The sampling period is how often the inceptor should provide new data, used for 
 | Name | Description |
 | --- | --- |
 | bool new_data | Whether new data was received |
-| bool healthy | Whether the sensor is healthy |
+| bool lost_frame | Whether a frame of data was lost |
+| bool failsafe | Whether the receiver has entered failsafe |
 | bool throttle_en | Whether throttle is enabled |
 | int8_t mode0 | Mode0 switch |
 | int8_t mode1 | Mode1 switch |
 | int8_t mode2 | Mode2 switch |
+| int8_t mode3 | Mode3 switch |
 | float throttle | Throttle input |
 | float pitch | Pitch input |
 | float roll | Roll input |
