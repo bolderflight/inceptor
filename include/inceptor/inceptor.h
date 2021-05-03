@@ -35,7 +35,7 @@ namespace bfs {
 struct InceptorChannel {
   int8_t ch;
   int8_t num_coef;
-  float poly_coeff[MAX_POLY_COEF_SIZE];
+  float poly_coef[MAX_POLY_COEF_SIZE];
 };
 /* Inceptor config */
 struct InceptorConfig {

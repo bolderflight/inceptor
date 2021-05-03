@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.1.1
+- Typo poly_coeff -> poly_coef
+
 ## v2.1.0
 - Added lost_frame and failsafe data
 - Added an additional channel for mode switching (mode3)

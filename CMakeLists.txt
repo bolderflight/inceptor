@@ -5,7 +5,7 @@ if (DEFINED MCU)
 endif()
 # Project information
 project(Inceptor
-	VERSION 2.1.0
+	VERSION 2.1.1
 	DESCRIPTION "Inceptor interface"
 	LANGUAGES CXX
 )
