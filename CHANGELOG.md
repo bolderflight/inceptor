@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.1.2
+- global_defs v2.1.0
+
 ## v2.1.1
 - Typo poly_coeff -> poly_coef
 
