@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.2.0
+- Updated to 2 mode switches instead of 4
+
 ## v2.1.2
 - global_defs v2.1.0
 
