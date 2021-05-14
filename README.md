@@ -46,8 +46,6 @@ This library is within the namespace *bfs*.
 | InceptorChannel throttle_en | Throttle enable configuration |
 | InceptorChannel mode0 | Mode0 configuration |
 | InceptorChannel mode1 | Mode1 configuration |
-| InceptorChannel mode2 | Mode2 configuration |
-| InceptorChannel mode3 | Mode3 configuration |
 | InceptorChannel throttle | Throttle configuration |
 | InceptorChannel pitch | Pitch configuration |
 | InceptorChannel roll | Roll configuration |
@@ -72,8 +70,6 @@ The configuration for each inceptor is a struct consisting of:
 | bool throttle_en | Whether throttle is enabled |
 | int8_t mode0 | Mode0 switch |
 | int8_t mode1 | Mode1 switch |
-| int8_t mode2 | Mode2 switch |
-| int8_t mode3 | Mode3 switch |
 | float throttle | Throttle input |
 | float pitch | Pitch input |
 | float roll | Roll input |
