@@ -26,48 +26,24 @@
 #ifndef INCLUDE_INCEPTOR_INCEPTOR_H_
 #define INCLUDE_INCEPTOR_INCEPTOR_H_
 
-#include "core/core.h"
-#include "global_defs/global_defs.h"
+#include <concepts>
+#include <cstdint>
 
 namespace bfs {
 
-/* Config for a single inceptor */
-struct InceptorChannel {
-  int8_t ch;
-  int8_t num_coef;
-  float poly_coef[MAX_POLY_COEF_SIZE];
-};
-/* Inceptor config */
-struct InceptorConfig {
-  HardwareSerial *hw;
-  InceptorChannel throttle_en;
-  InceptorChannel mode0;
-  InceptorChannel mode1;
-  InceptorChannel throttle;
-  InceptorChannel pitch;
-  InceptorChannel roll;
-  InceptorChannel yaw;
-};
+inline constexpr int8_t MAX_NUM_INCEPTOR_CH = 32;
+
 /* Inceptor data */
 struct InceptorData {
   bool new_data;
-  bool lost_frame;
-  bool failsafe;
-  bool throttle_en;
-  int8_t mode0;
-  int8_t mode1;
-  float throttle;
-  float pitch;
-  float roll;
-  float yaw;
+  bool healthy;
+  int8_t num_ch;
+  float ch[MAX_NUM_INCEPTOR_CH];
 };
 /* Concept defining an inceptor interface */
 template<typename T>
-concept Inceptor = requires(T inceptor,
-                            const InceptorConfig &cfg,
-                            InceptorData * const data) {
-  { inceptor.Init(cfg) } -> std::same_as<bool>;
-  { inceptor.Read(data) } -> std::same_as<bool>;
+concept Inceptor = requires(T inceptor) {
+  { inceptor.inceptor_data() } -> std::same_as<InceptorData>;
 };  // NOLINT - gets confused with concepts and semicolon after braces
 
 }  // namespace bfs

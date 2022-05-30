@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.0.0
+- Updated with inceptor data normalized to +/-1
+
 ## v2.2.0
 - Updated to 2 mode switches instead of 4
 

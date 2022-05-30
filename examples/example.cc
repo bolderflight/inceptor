@@ -2,7 +2,7 @@
 * Brian R Taylor
 * brian.taylor@bolderflight.com
 * 
-* Copyright (c) 2021 Bolder Flight Systems Inc
+* Copyright (c) 2022 Bolder Flight Systems Inc
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the “Software”), to
@@ -28,16 +28,16 @@
 /* Example class compliant with the inceptor interface */
 class InceptorExample {
  public:
-  bool Init(const bfs::InceptorConfig &cfg) {}
-  bool Read(bfs::InceptorData * const data) {}
+  bfs::InceptorData inceptor_data() {}
 };
 /* Using static_assert to check compliance */
 static_assert(bfs::Inceptor<InceptorExample>,
   "Inceptor Example should be compliant with the Inceptor interface");
+
 /* Example of a function templated against the Inceptor interface */
 template<bfs::Inceptor T>
-bool InitInceptor(T inceptor, const bfs::InceptorConfig &ref) {
-  return inceptor.Init(ref);
+bfs::InceptorData ReadInceptor(T inceptor) {
+  return inceptor.inceptor_data();
 }
 
 int main() {
